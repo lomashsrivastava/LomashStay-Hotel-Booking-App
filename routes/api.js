@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
 
 const generateHotels = require('../data/generator');
 
@@ -9,23 +7,17 @@ const generateHotels = require('../data/generator');
 const allHotels = generateHotels(5000);
 console.log(`Generated ${allHotels.length} hotels.`);
 
-const bookingsDataPath = path.join(__dirname, '../data/bookings.json');
+// In-memory storage (Netlify functions are stateless/read-only fs)
+let bookings = [];
+let users = [];
 
-// Helper to read/write bookings
+// Helper to read bookings (from memory)
 const getBookings = () => {
-    try {
-        if (!fs.existsSync(bookingsDataPath)) return [];
-        const data = fs.readFileSync(bookingsDataPath);
-        return JSON.parse(data);
-    } catch (e) {
-        return [];
-    }
+    return bookings;
 };
 
 const saveBooking = (booking) => {
-    const bookings = getBookings();
     bookings.push(booking);
-    fs.writeFileSync(bookingsDataPath, JSON.stringify(bookings, null, 2));
 };
 
 // GET /api/hotels
@@ -106,9 +98,9 @@ router.post('/bookings', (req, res) => {
 // GET /api/admin/bookings
 router.get('/admin/bookings', (req, res) => {
     try {
-        const bookings = getBookings();
+        const currentBookings = getBookings();
         // Enrich with hotel details
-        const enrichedBookings = bookings.map(b => {
+        const enrichedBookings = currentBookings.map(b => {
             const hotel = allHotels.find(h => h.id == b.hotelId);
             return {
                 ...b,
@@ -130,14 +122,6 @@ router.post('/register', (req, res) => {
         return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const usersPath = path.join(__dirname, '../data/users.json');
-    let users = [];
-
-    if (fs.existsSync(usersPath)) {
-        const data = fs.readFileSync(usersPath);
-        users = JSON.parse(data);
-    }
-
     // Check if user exists
     if (users.find(u => u.email === email)) {
         return res.status(400).json({ message: 'User already exists' });
@@ -152,20 +136,18 @@ router.post('/register', (req, res) => {
     };
 
     users.push(newUser);
-    fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
 
     res.status(201).json({ message: 'Registration successful', user: newUser });
 });
 
 // GET /api/admin/users
 router.get('/admin/users', (req, res) => {
-    const usersPath = path.join(__dirname, '../data/users.json');
-    if (fs.existsSync(usersPath)) {
-        const data = fs.readFileSync(usersPath);
-        res.json(JSON.parse(data));
-    } else {
-        res.json([]);
-    }
+    res.json(users);
+});
+
+// Health check endpoint
+router.get('/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 module.exports = router;
