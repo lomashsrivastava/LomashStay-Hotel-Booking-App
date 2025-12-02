@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | LomashStay</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-container {
+            padding: 2rem 5%;
+            min-height: 80vh;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: rgba(20, 20, 20, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .table-container {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-dark);
+        }
+
+        th,
+        td {
+            padding: 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            background-color: rgba(0, 242, 255, 0.1);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-light);
+        }
+    </style>
+    <script>
+        // Security Check
+        if (sessionStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">LomashStay Admin</div>
+        <div class="nav-links">
+            <a href="index.html">Back to Site</a>
+            <a href="#" id="logout-btn" style="color: #ff4d4d;">Logout</a>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
+                <li><a href="#" class="active" data-tab="bookings">Bookings</a></li>
+                <li><a href="#" data-tab="users">Users</a></li>
+                <li><a href="index.html">Back to Site</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div id="bookings-tab" class="tab-content active">
+                <div class="header">
+                    <h1>Manage Bookings</h1>
+                    <button id="refresh-btn" class="btn-primary">Refresh</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>User Name</th>
+                                <th>Email</th>
+                                <th>Hotel ID</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="booking-table-body">
+                            <!-- Bookings injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="users-tab" class="tab-content">
+                <div class="header">
+                    <h1>Registered Users</h1>
+                    <button id="refresh-users-btn" class="btn-primary">Refresh</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Joined Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- Users injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bookingTableBody = document.getElementById('booking-table-body');
+            const usersTableBody = document.getElementById('users-table-body');
+            const refreshBtn = document.getElementById('refresh-btn');
+            const refreshUsersBtn = document.getElementById('refresh-users-btn');
+            const tabs = document.querySelectorAll('.sidebar a[data-tab]');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            // Tab Switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+
+                    tab.classList.add('active');
+                    document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
+                });
+            });
+
+            const fetchBookings = () => {
+                fetch('/api/admin/bookings')
+                    .then(res => res.json())
+                    .then(bookings => {
+                        bookingTableBody.innerHTML = '';
+                        bookings.forEach(booking => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                        <td>#${booking.id}</td>
+                        <td>${booking.name}</td>
+                        <td>${booking.email}</td>
+                        <td>${booking.hotelId}</td>
+                        <td>${booking.date}</td>
+                        <td><span class="status confirmed">Confirmed</span></td>
+                    `;
+                            bookingTableBody.appendChild(row);
+                        });
+                    })
+                    .catch(err => console.error('Error fetching bookings:', err));
+            };
+
+            const fetchUsers = () => {
+                fetch('/api/admin/users')
+                    .then(res => res.json())
+                    .then(users => {
+                        usersTableBody.innerHTML = '';
+                        users.forEach(user => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.password}</td>
+                        <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+                    `;
+                            usersTableBody.appendChild(row);
+                        });
+                    })
+                    .catch(err => console.error('Error fetching users:', err));
+            };
+
+            refreshBtn.addEventListener('click', fetchBookings);
+            refreshUsersBtn.addEventListener('click', fetchUsers);
+
+            // Initial Load
+            fetchBookings();
+            fetchUsers();
+
+            // Logout Logic
+            document.getElementById('logout-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm('Are you sure you want to logout?')) {
+                    sessionStorage.removeItem('adminLoggedIn');
+                    window.location.href = 'admin-login.html';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
