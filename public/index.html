@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LomashStay | Future of Luxury Booking</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">LomashStay</div>
+        <div class="nav-links">
+            <a href="#" class="active">Home</a>
+            <a href="#hotels">Destinations</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="admin.html">Admin Panel</a>
+            <button id="nav-signin-btn" class="btn-primary">Sign In</button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Experience the Future of Luxury</h1>
+            <p>Discover handpicked hotels and resorts for your next unforgettable getaway with LomashStay.</p>
+            <a href="#hotels" class="btn-primary btn-large">Explore Hotels</a>
+        </div>
+    </header>
+
+    <section id="recommended" class="recommended-section">
+        <div class="section-header">
+            <h2>Recommended for You</h2>
+            <p>Top-rated stays curated just for you.</p>
+        </div>
+        <div id="recommended-grid" class="hotel-grid">
+            <!-- Injected by JS -->
+            <div class="loading">Loading recommendations...</div>
+        </div>
+    </section>
+
+    <section id="hotels" class="hotels-section">
+        <div class="section-header">
+            <h2>Curated Destinations</h2>
+            <p>Choose from our exclusive collection of premium stays.</p>
+        </div>
+
+        <!-- Search and Filter Bar -->
+        <div class="filter-bar">
+            <div class="search-group">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search hotels, cities, or countries...">
+            </div>
+            <div class="filter-group">
+                <select id="rating-filter">
+                    <option value="">Any Rating</option>
+                    <option value="4.5">4.5+ Stars</option>
+                    <option value="4.0">4.0+ Stars</option>
+                    <option value="3.0">3.0+ Stars</option>
+                </select>
+                <div class="price-range">
+                    <input type="number" id="min-price" placeholder="Min Rs">
+                    <span>-</span>
+                    <input type="number" id="max-price" placeholder="Max Rs">
+                </div>
+                <button id="apply-filters" class="btn-primary">Apply</button>
+            </div>
+        </div>
+
+        <div id="hotel-grid" class="hotel-grid">
+            <!-- Hotels will be injected here by JS -->
+            <div class="loading">Loading exclusive stays...</div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button id="prev-page" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+            <span id="page-info">Page 1 of 1</span>
+            <button id="next-page">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="section-header">
+            <h2>About LomashStay</h2>
+            <p>Redefining the art of travel and hospitality.</p>
+        </div>
+        <div class="about-content">
+            <p>LomashStay is a premier hotel booking platform dedicated to providing travelers with the most luxurious
+                and comfortable stays around the globe. Founded with a vision to make luxury accessible, we curate only
+                the finest hotels and resorts.</p>
+            <p>Our futuristic approach combines cutting-edge technology with personalized service, ensuring that your
+                journey is seamless from booking to check-out. Whether you are looking for a serene mountain retreat or
+                a vibrant urban escape, LomashStay is your trusted partner in travel.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="section-header">
+            <h2>Contact Us</h2>
+            <p>We are here to assist you 24/7.</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Banda Uttar Pradesh India</p>
+                <p><i class="fas fa-envelope"></i> lomashgroups@gmail.com</p>
+                <p><i class="fas fa-envelope"></i> srivastavagroupsofcompanies@gmail.com</p>
+                <p><i class="fas fa-envelope"></i> lomashbnd@gmail.com</p>
+            </div>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+                <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Sign In Modal -->
+    <div id="signin-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal close-signin">&times;</span>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-target="signin-form">Sign In</button>
+                <button class="auth-tab" data-target="register-form">Register</button>
+            </div>
+
+            <form id="signin-form" class="auth-form active">
+                <h2>Welcome Back</h2>
+                <div class="form-group">
+                    <label for="signin-email">Email Address</label>
+                    <input type="email" id="signin-email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" required placeholder="********">
+                </div>
+                <button type="submit" class="btn-primary btn-full">Sign In</button>
+            </form>
+
+            <form id="register-form" class="auth-form">
+                <h2>Create Account</h2>
+                <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email Address</label>
+                    <input type="email" id="register-email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" required placeholder="********">
+                </div>
+                <button type="submit" class="btn-primary btn-full">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Book Your Stay</h2>
+            <h3 id="modal-hotel-name">Hotel Name</h3>
+            <form id="booking-form">
+                <input type="hidden" id="hotel-id">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="date">Check-in Date</label>
+                    <input type="date" id="date" required>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Proceed to Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <h2>Complete Payment</h2>
+            <p>Scan the QR code to pay. Auto-confirming in <span id="timer">5</span>s...</p>
+            <div class="qr-code">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=LomashStayPayment"
+                    alt="Payment QR Code">
+            </div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>LomashStay</h3>
+                <p>Redefining luxury travel bookings.</p>
+                <p>Office Address: Banda Uttar Pradesh India</p>
+            </div>
+            <div class="footer-col">
+                <h4>Links</h4>
+                <a href="#">Home</a>
+                <a href="#hotels">Destinations</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="admin.html">Admin Panel</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>lomashgroups@gmail.com</p>
+                <p>srivastavagroupsofcompanies@gmail.com</p>
+                <p>lomashbnd@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 LomashStay. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

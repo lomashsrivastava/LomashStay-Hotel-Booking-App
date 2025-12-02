@@ -1,0 +1,25 @@
+{
+  "name": "lomashstay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "homepage": "https://lomashsrivastava.github.io/LomashStay-Hotel-Booking-App",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d public"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "body-parser": "^2.2.1",
+    "cors": "^2.8.5",
+    "express": "^5.2.0",
+    "serverless-http": "^4.0.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}

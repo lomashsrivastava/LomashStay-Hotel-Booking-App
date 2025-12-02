@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "Grand Luxury Hotel",
+        "description": "Experience world-class service and amenities in the heart of the city.",
+        "price": 250,
+        "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+    },
+    {
+        "id": 2,
+        "name": "Seaside Resort & Spa",
+        "description": "Relax by the ocean with our exclusive beach access and spa treatments.",
+        "price": 350,
+        "image": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+    },
+    {
+        "id": 3,
+        "name": "Mountain View Lodge",
+        "description": "Cozy cabins with breathtaking views of the mountains.",
+        "price": 180,
+        "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1025&q=80"
+    },
+    {
+        "id": 4,
+        "name": "Urban Boutique Hotel",
+        "description": "Stylish and modern accommodation for the urban traveler.",
+        "price": 200,
+        "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+    },
+    {
+        "id": 5,
+        "name": "Historic Castle Stay",
+        "description": "Live like royalty in a beautifully restored historic castle.",
+        "price": 500,
+        "image": "https://images.unsplash.com/photo-1585543805890-6051f7829f98?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+    },
+    {
+        "id": 6,
+        "name": "Eco-Friendly Retreat",
+        "description": "Sustainable luxury in harmony with nature.",
+        "price": 220,
+        "image": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+    }
+]
