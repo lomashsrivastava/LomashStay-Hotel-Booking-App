@@ -3,6 +3,9 @@
 ## Project Overview
 LomashStay is a futuristic, premium hotel booking website featuring a dark-themed UI, real-time search (City & Country), user authentication, and a secure Admin Panel.
 
+## Live Demo
+[Click here to visit the live website](https://lomashstay.netlify.app)
+
 ## Prerequisites
 - **Node.js**: Ensure Node.js is installed on your system. You can download it from [nodejs.org](https://nodejs.org/).
 
