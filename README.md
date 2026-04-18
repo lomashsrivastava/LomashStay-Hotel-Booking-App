@@ -39,3 +39,12 @@ To access the Admin Panel, use the following credentials:
 - If styles don't load, try a hard refresh (Ctrl+F5) to clear the cache.
 
 Designed And Developed By Lomash Srivastava
+
+
+![Stars](https://img.shields.io/github/stars/lomashsrivastava/=social)
+![Forks](https://img.shields.io/github/forks/lomashsrivastava/=social)
+
+
+## ?? Screenshots
+Add screenshots here (./screenshots folder)
+
