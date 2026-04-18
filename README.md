@@ -37,3 +37,5 @@ To access the Admin Panel, use the following credentials:
 ## Troubleshooting
 - If the server doesn't start, make sure port 3000 is free.
 - If styles don't load, try a hard refresh (Ctrl+F5) to clear the cache.
+
+Designed And Developed By Lomash Srivastava
